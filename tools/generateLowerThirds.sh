@@ -1,6 +1,7 @@
 #!/bin/bash
 # Generate lower-thirds ontop of another video
 # the base file in the static directory needs to stay in .mov (quicktime encoded with alpha layers)
+# One thing to note: the `geometry` and `fgcolor` of the text overlay is hard coded to align with the video at this resolution, if it's changed it might look funky
 
 # usage: ./generateLowerThirds.sh <input_video> <text> <output_location>
 # example: ./generateLowerThirds.sh ../INPUT/dog.mp4 "Getting comfy..." ../OUTPUT/dog-overlay.mp4
