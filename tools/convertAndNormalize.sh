@@ -18,7 +18,7 @@ find . -type f -not -name '.*' -a \( -name "*.MOV" -o -name "*.mov" -name "*.AVI
        -exec bash -c '\
         file=${1#./}; \
           rm $file &&
-          yes | ffmpeg -i ../INPUT/$file -vf "fps=30,scale=1280:720" -af loudnorm -c:v libx264 -c:a aac ./`echo $file | cut -f 1 -d '.'`.mp4 \
+          yes | ffmpeg -i ../INPUT/$file -vf "yadif,format=yuv420p,fps=30,scale=1280:720" -af loudnorm -c:v libx264 -crf 18 -bf 2 -c:a aac -q:a 1 -ac 2 -ar 48000 -use_editlist 0 -movflags +faststart ./`echo $file | cut -f 1 -d '.'`.mp4 \
       ' _ '{}' \;
 
 # Find all .MP3 .mp3 .AAC .aac .WAV .wav and turn them into aac / loudness normalized
