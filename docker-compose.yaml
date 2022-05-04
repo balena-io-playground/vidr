@@ -1,0 +1,29 @@
+version: "2.1"
+
+volumes:
+  files:
+
+services:
+  mlt:
+    build: ./
+    restart: always
+    volumes:
+      - files:/files
+
+  files:
+    build: ./files
+    restart: always
+    ports:
+      - 80
+    volumes:
+      - files:/files
+    environment:
+      - BROWSE_FOLDER=/files
+
+  file-transfer:
+    image: ghcr.io/rcooke-warwick/file-transfer:latest
+    restart: always
+    volumes:
+      - "files:/data"
+    ports:
+      - 3000
