@@ -12,13 +12,13 @@ cd ../OUTPUT
 
 # Find all .MOV .mov .mp4 .MP4 files (excluding hidden files) in the subfolders and convert them to
 # TODO: Need to do some conversion for vertical video
-# Then -> turn into : mp4 / h264 / 720p30 / aac / loudness normalized
+# Then -> turn into : mp4 / h264 / 1080p30 / aac / loudness normalized
 
 find . -type f -not -name '.*' -a \( -name "*.MOV" -o -name "*.mov" -name "*.AVI" -o -name "*.avi" -o -name "*.mp4" -o -name "*.MP4" \) \
        -exec bash -c '\
         file=${1#./}; \
           rm $file &&
-          yes | ffmpeg -i ../INPUT/$file -vf "yadif,format=yuv420p,fps=30,scale=1280:720" -af loudnorm -c:v libx264 -crf 18 -bf 2 -c:a aac -q:a 1 -ac 2 -ar 48000 -use_editlist 0 -movflags +faststart ./`echo $file | cut -f 1 -d '.'`.mp4 \
+          yes | ffmpeg -i ../INPUT/$file -vf "yadif,format=yuv420p,fps=30,scale=1920:1080" -af loudnorm -c:v libx264 -crf 18 -bf 2 -c:a aac -q:a 1 -ac 2 -ar 48000 -use_editlist 0 -movflags +faststart ./`echo $file | cut -f 1 -d '.'`.mp4 \
       ' _ '{}' \;
 
 # Find all .MP3 .mp3 .AAC .aac .WAV .wav and turn them into aac / loudness normalized
