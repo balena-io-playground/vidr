@@ -102,8 +102,8 @@ const metaPath = path.join(dir, "FFMETADATAFILE")
 $`yes | ffmpeg -i ${assemblyOutputPath} -f ffmetadata ${metaPath}`
 
 // inject title
-$`echo "title=Hello World" >> FFMETADATAFILE.txt`
-$`echo "artist=BMovie Team Test" >> FFMETADATAFILE.txt`
+await $`echo "title=Hello World" >> ${metaPath}`
+await $`echo "artist=BMovie Team Test" >> ${metaPath}`
 
 // inject chapters
 let lastEnd = 0
