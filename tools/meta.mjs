@@ -68,7 +68,6 @@ for (const clip of orderedFiles) {
       .split(":")
     const startFrame = (startTime[0] * 3600 + startTime[1] * 60 + startTime[2]) * 30
     const stopFrame = (stopTime[0] * 3600 + stopTime[1] * 60 + stopTime[2]) * 30
-    console.log(startTime, stopTime, startFrame, stopFrame)
     await $`melt ${mp4Path} in=${startFrame} out=${stopFrame} -consumer avformat:${mp4OutputPath} -codec copy`
     fs.move(mp4OutputPath, mp4Path, { overwrite: true }) // replace the source by the output for next step
   }
@@ -99,7 +98,7 @@ await $`xvfb-run -a melt ${assemblyLine} -mix 25 -mixer luma -mixer mix:-1 -cons
 
 // export metadata
 const finalOutputPath = path.join(dir, "output.mp4")
-const metaPath = path("dir", "FFMETADATAFILE.txt")
+const metaPath = path.join("dir", "FFMETADATAFILE.txt")
 $`yes | ffmpeg -i ${assemblyOutputPath} -f ffmetadata ${metaPath}`
 
 // inject chapters
