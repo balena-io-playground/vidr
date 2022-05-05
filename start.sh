@@ -5,7 +5,7 @@ mkdir /files/INPUT
 
 rm -rf /files/OUTPUT/*
 
-cp -rf /usr/src/videos /files/INPUT/
+cp -rf /usr/src/videos /files/INPUT
 
 cd /files/INPUT
 /usr/src/tools/convertAndNormalize.sh
