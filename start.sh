@@ -3,7 +3,7 @@
 mkdir /files/OUTPUT
 mkdir /files/INPUT
 
-rm -rf /file/OUTPUT/*
+rm -rf /files/OUTPUT/*
 
 cp -rf /usr/src/videos /files/INPUT/
 
