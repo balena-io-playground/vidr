@@ -106,15 +106,11 @@ let lastEnd = 0
 for (const clip in orderedFiles) {
   const start = lastEnd
   const end = start + clip.length
-  const meta = 
-`[CHAPTER]
-TIMEBASE=1/1000
-START=${lastEnd}
-END=${start}
-title=${clip.folder}`
-
-  await $`echo ${meta} >> ${metaPath}`
-
+  await $`echo "[CHAPTER]" >> ${metaPath}`
+  await $`echo "TIMEBASE=1/1000" >> ${metaPath}`
+  await $`echo "START=${lastEnd}" >> ${metaPath}`
+  await $`echo "END=${lastEnd + start}" >> ${metaPath}`
+  await $`echo "title=${clip.folder}" >> ${metaPath}`
   lastEnd = end
 }
 
