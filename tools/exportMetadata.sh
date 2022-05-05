@@ -16,21 +16,23 @@ echo "artist=BMovie Team Test" >> FFMETADATAFILE.txt
 
 # ffprobe -i 01-intro/intro.mp4 -v quiet -show_entries format=duration -hide_banner -of default=noprint_wrappers=1:nokey=1 
 
-LASTSTART=-1
-
 find . -type f -not -name '.*' -a \( -name "*.mp4" \) \
   -exec bash -c '\
   file=${1#./}; \
-    LENGTH=`ffprobe -i 01-intro/intro.mp4 -v quiet -show_entries format=duration -hide_banner -of default=noprint_wrappers=1:nokey=1` \
+    LENGTH=`ffprobe -i $file -v quiet -show_entries format=duration -hide_banner -of default=noprint_wrappers=1:nokey=1 | cut -f 1 -d '.'`
     TITLE=`basename ${file}`
-    echo $LENGTH
-    echo $TITLE
+    if [[ -z "$LASTSTART" ]]; then 
+      LASTSTART=0
+    fi
+    echo "$LENGTH"
+    echo "$TITLE"
+    echo "$LASTSTART"
     # echo "[CHAPTER]" >> FFMETADATAFILE.txt
     # echo "TIMEBASE=1/1000" >> FFMETADATAFILE.txt
-    # echo "START=${LASTSTART+1}" >> FFMETADATAFILE.txt
-    # echo "END=${LENGTH}" >> FFMETADATAFILE.txt
+    # echo "START=$(($LASTSTART))" >> FFMETADATAFILE.txt
+    # echo "END=$(($LASTSTART+$LENGTH))" >> FFMETADATAFILE.txt
     # echo "title=${TITLE}" >> FFMETADATAFILE.txt
-    # LASTSTART = LASTSTART + LENGTH
+    LASTSTART=$(($LASTSTART+$LENGTH))
 ' _ '{}' \;
 
 # Then we write back the new meta into the output
