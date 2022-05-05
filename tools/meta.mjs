@@ -98,7 +98,7 @@ await $`xvfb-run -a melt ${assemblyLine} -mix 25 -mixer luma -mixer mix:-1 -cons
 
 // export metadata
 const finalOutputPath = path.join(dir, "output.mp4")
-const metaPath = path.join("dir", "FFMETADATAFILE.txt")
+const metaPath = path.join(dir, "FFMETADATAFILE.txt")
 $`yes | ffmpeg -i ${assemblyOutputPath} -f ffmetadata ${metaPath}`
 
 // inject chapters
