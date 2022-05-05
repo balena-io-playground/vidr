@@ -1,0 +1,23 @@
+{
+  "name": "vidr-transformer-source",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@balena/transformer-sdk": "^0.3.0",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.4"
+  },
+  "versionist": {
+    "publishedAt": "2022-05-03T02:22:40.541Z"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.1"
+  }
+}

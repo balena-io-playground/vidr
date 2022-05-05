@@ -1,0 +1,53 @@
+handle: egg
+type: type
+---
+handle: caterpillar
+type: type
+data:
+  schema:
+    type: object
+    required:
+      - numLegs
+    properties:
+      numLegs:
+        type: number
+---
+handle: chrysalis
+type: type
+---
+handle: butterfly
+type: type
+data:
+  schema:
+    type: object
+    required:
+      - numWings
+    properties:
+      numWings:
+        type: number
+---
+handle: egg-2-caterpillar
+type: transformer
+data:
+  input:
+    $ref: egg
+  output:
+    $ref: caterpillar
+---
+handle: caterpillar-2-chrysalis
+type: transformer
+data:
+  input:
+    $ref: caterpillar
+  output:
+    $ref: chrysalis
+---
+handle: chrysalis-2-butterfly
+type: transformer
+data:
+  input:
+    $ref: chrysalis
+  output:
+    $ref: butterfly
+$artifact:
+  install_packages: git
