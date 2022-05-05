@@ -98,7 +98,7 @@ await $`xvfb-run -a melt ${assemblyLine} -mix 25 -mixer luma -mixer mix:-1 -cons
 
 // export metadata
 const finalOutputPath = path.join(dir, "output.mp4")
-const metaPath = path.join(dir, "FFMETADATAFILE.txt")
+const metaPath = path.join(dir, "FFMETADATAFILE")
 $`yes | ffmpeg -i ${assemblyOutputPath} -f ffmetadata ${metaPath}`
 
 // inject chapters
@@ -106,13 +106,12 @@ let lastEnd = 0
 for (const clip in orderedFiles) {
   const start = lastEnd
   const end = start + clip.length
-  const meta = `
-    [CHAPTER]
-    TIMEBASE=1/1000
-    START=${lastEnd}
-    END=${start}
-    title=${end}
-  `
+  const meta = 
+`[CHAPTER]
+TIMEBASE=1/1000
+START=${lastEnd}
+END=${start}
+title=${clip.folder}`
 
   await $`echo ${meta} >> ${metaPath}`
 
