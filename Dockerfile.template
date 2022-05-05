@@ -1,7 +1,7 @@
 # Heavily inspired by https://github.com/mltframework/mlt/blob/master/Dockerfile
 
 ARG BALENA_ARCH=%%BALENA_ARCH%%
-FROM balenalib/$BALENA_ARCH-ubuntu:latest AS base
+FROM balenalib/$BALENA_ARCH-ubuntu-node:latest AS base
 
 ENV HOME /tmp
 
@@ -56,12 +56,16 @@ RUN install_packages libvorbis-dev
 # Install the MLT
 COPY --from=build /usr/local/ /usr/local/
 
+RUN npm i -g zx
+
 WORKDIR /usr/src 
 
 COPY . /usr/src/
+
 
 ENV LD_LIBRARY_PATH /usr/local/lib
 
 # Qt, Movit, and WebVfx require xvfb-run, which requires a PID 1 init provided by dumb-init
 # ENTRYPOINT ["/usr/bin/dumb-init", "--", "/usr/bin/xvfb-run", "-a", "/usr/local/bin/melt"]
-ENTRYPOINT ["balena-idle"]
+# ENTRYPOINT ["balena-idle"]
+CMD [ "/bin/bash", "/usr/src/start.sh" ]
