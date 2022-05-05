@@ -101,6 +101,10 @@ const finalOutputPath = path.join(dir, "output.mp4")
 const metaPath = path.join(dir, "FFMETADATAFILE")
 $`yes | ffmpeg -i ${assemblyOutputPath} -f ffmetadata ${metaPath}`
 
+// inject title
+$`echo "title=Hello World" >> FFMETADATAFILE.txt`
+$`echo "artist=BMovie Team Test" >> FFMETADATAFILE.txt`
+
 // inject chapters
 let lastEnd = 0
 for (const clip in orderedFiles) {
