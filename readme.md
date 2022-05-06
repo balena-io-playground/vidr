@@ -15,18 +15,20 @@ All of the edited clips will then be joined together in the correct order, and a
 Simply record the sections of your video and add them to a landr-style folder structure:
 ![Folder-structure](./docs/images/top-level-folder.png)
 
-
 ![Folder-structure](./docs/images/folder-sections.png)
 
 ## (Optional) Add audio files
 Want some background music, or a clean voiceover explaining what's happening on the screen? Simply add the audio file next to the clip, and vidr will make it so:
+
 ![audio](./docs/images/audio.png)
 
 For instance a 'caption.md' file will cause the text in that file to be overlaid on top of the clip, in a beautiful dynamic caption.
 
 ## (Optional) Add captions
 Want some text overlaid on top of a clip, to make a cool segway scene? Sure, just add a `caption.md` file:
+
 ![caption](./docs/images/caption.png)
+
 and vidr will do the rest!
 
 https://user-images.githubusercontent.com/39430324/167104079-b9d332b4-c7db-45dd-a6d2-17aa4a829960.mp4
