@@ -1,2 +1,2 @@
 # Caption
-Vidr enables product builders to create great videos for their product with minimal work and no editing skills!
+Vidr enablings product builders to create great videos!

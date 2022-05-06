@@ -1,2 +1,2 @@
 # Caption
-Trim videos
+Trim videos in markdown.
