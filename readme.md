@@ -29,4 +29,5 @@ Want some text overlaid on top of a clip, to make a cool segway scene? Sure, jus
 ![caption](./docs/images/caption.png)
 and vidr will do the rest!
 
-![dog](./docs/images/dog-overlay.mp4)
+https://user-images.githubusercontent.com/39430324/167104079-b9d332b4-c7db-45dd-a6d2-17aa4a829960.mp4
+
