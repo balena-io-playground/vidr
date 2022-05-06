@@ -54,8 +54,16 @@ for (const clip of orderedFiles) {
 
   console.log("start processing", clip.folder, clip.file)
 
+  // ADD AUDIO OVERLAY
+  // Note we add audio before trim, so if the audio is longer than vid, the trimming is applied on both
+  console.log("1. Audio")
+  if (audioOverlay) {
+    await $`melt ${mp4Path} -audio-track ${path.join(basePath, audioOverlay)} -consumer avformat:${mp4OutputPath} -codec copy`
+    fs.move(mp4OutputPath, mp4Path, { overwrite: true }) // replace the source by the output for next step
+  }
+
   // TRIM
-  console.log("1. Trim")
+  console.log("2. Trim")
   if (trim) {
     //FIXME: this is not robust at all
     const trimContent = await fs.readFile(path.join(basePath, "trim.md"), "utf8")
@@ -71,13 +79,6 @@ for (const clip of orderedFiles) {
     const startFrame = (startTime[0] * 3600 + startTime[1] * 60 + startTime[2]) * 30
     const stopFrame = (stopTime[0] * 3600 + stopTime[1] * 60 + stopTime[2]) * 30
     await $`melt ${mp4Path} in=${startFrame} out=${stopFrame} -consumer avformat:${mp4OutputPath} -codec copy`
-    fs.move(mp4OutputPath, mp4Path, { overwrite: true }) // replace the source by the output for next step
-  }
-
-  // ADD AUDIO OVERLAY
-  console.log("2. Audio")
-  if (audioOverlay) {
-    await $`melt ${mp4Path} -audio-track ${path.join(basePath, audioOverlay)} -consumer avformat:${mp4OutputPath} -codec copy`
     fs.move(mp4OutputPath, mp4Path, { overwrite: true }) // replace the source by the output for next step
   }
 
