@@ -116,7 +116,6 @@ let lastEnd = 0
 for (const clip of orderedFiles) {
   const start = lastEnd
   const end = start + clip.duration
-  console.log(clip, clip.folder, start, end)
   await $`echo "[CHAPTER]" >> ${metaPath}`
   await $`echo "TIMEBASE=1/1000" >> ${metaPath}`
   await $`echo "START=${start}" >> ${metaPath}`
