@@ -1,4 +1,4 @@
-# Vidr
+# vidr
 Landr only for product videos!
 Enable product builders to create beautiful videos by simply putting their raw content alongside their source code.
 vidr will clean it up, trim it, overlay audio, add gorgeous captions and create a smash hit product video.
