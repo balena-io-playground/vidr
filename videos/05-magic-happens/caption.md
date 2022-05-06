@@ -1,2 +1,2 @@
 # caption
-Your videos get cleaned up, YouTube chapters and an intro and outro made FOR YOU!
+Cleaned videos, chapters and an intro/outro made FOR YOU!

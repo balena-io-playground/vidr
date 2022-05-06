@@ -1,2 +1,2 @@
 # Captions
-Add captions as markdown and they are overlaid on the video for you.
+Add captions as markdown and they are overlaid for you.
