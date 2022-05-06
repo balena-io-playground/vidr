@@ -100,12 +100,16 @@ await $`xvfb-run -a melt ${assemblyLine} -mix 25 -mixer luma -mixer mix:-1 -cons
 
 // export metadata
 const finalOutputPath = path.join(dir, "output.mp4")
-const metaPath = path.join(dir, "FFMETADATAFILE")
-$`yes | ffmpeg -i ${assemblyOutputPath} -f ffmetadata ${metaPath}`
+const metaPath = path.join(dir, "FFMETADATAFILE.txt")
+try {
+  $`ffmpeg -y -i ${assemblyOutputPath} -f ffmetadata ${metaPath}`
+} catch (err) {
+  // we don't care about the error, it's not a real error
+}
 
 // inject title
 await $`echo "title=Hello World" >> ${metaPath}`
-await $`echo "artist=BMovie Team Test" >> ${metaPath}`
+await $`echo "artist=Vidr Team" >> ${metaPath}`
 
 // inject chapters
 let lastEnd = 0
@@ -114,11 +118,11 @@ for (const clip in orderedFiles) {
   const end = start + clip.length
   await $`echo "[CHAPTER]" >> ${metaPath}`
   await $`echo "TIMEBASE=1/1000" >> ${metaPath}`
-  await $`echo "START=${lastEnd}" >> ${metaPath}`
-  await $`echo "END=${lastEnd + start}" >> ${metaPath}`
+  await $`echo "START=${start}" >> ${metaPath}`
+  await $`echo "END=${end}" >> ${metaPath}`
   await $`echo "title=${clip.folder}" >> ${metaPath}`
   lastEnd = end
 }
 
 // reimport metadata
-$`ffmpeg -i ${assemblyOutputPath} -i ${metaPath} -map_metadata 1 -codec copy ${finalOutputPath}`
+$`ffmpeg -y -i ${assemblyOutputPath} -i ${metaPath} -map_metadata 1 -codec copy ${finalOutputPath}`
