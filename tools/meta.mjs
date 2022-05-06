@@ -97,6 +97,17 @@ const assemblyLine = orderedFiles.map((clip) => path.join(dir, clip.folder, clip
 const assemblyOutputPath = path.join(dir, "output-assembly.mp4")
 await $`xvfb-run -a melt ${assemblyLine} -mix 25 -mixer luma -mixer mix:-1 -consumer avformat:${assemblyOutputPath} -codec copy`
 
+// // add the optional music underlay
+// try {
+//   const underlay = await fs.stat(path.join(dir, 'underlay.aac'))
+//   if(underlay) {
+//     //const duration = await $`ffprobe -i ${assemblyOutputPath} -v quiet -show_entries format=duration -hide_banner -of default=noprint_wrappers=1:nokey=1 | cut -f 1 -d '.'`
+//     await $`xvfb-run -a melt ${assemblyOutputPath} -audio-track -blank 100 underlay.aac -attach-clip volume gain=-12db -transition mix in=0 out=60000 a_track=0 b_track=1`
+//   }
+// } catch(err) { 
+//   //we don't coare
+// }
+
 // finaly add the metadata (chapters, etc.)
 
 // export metadata
@@ -108,21 +119,28 @@ try {
   // we don't care about the error, it's not a real error
 }
 
+const meta = []
+
 // inject title
-await $`echo "title=Hello World" >> ${metaPath}`
-await $`echo "artist=Vidr Team" >> ${metaPath}`
+meta.push("title=Hello World")
+meta.push("artist=Vidr Team")
 
 // inject chapters
 let lastEnd = 0
 for (const clip of orderedFiles) {
   const start = lastEnd
   const end = start + clip.duration
-  await $`echo "[CHAPTER]" >> ${metaPath}`
-  await $`echo "TIMEBASE=1/1000" >> ${metaPath}`
-  await $`echo "START=${start}" >> ${metaPath}`
-  await $`echo "END=${end}" >> ${metaPath}`
-  await $`echo "title=${clip.folder}" >> ${metaPath}`
+  meta.push(`[CHAPTER]`)
+  meta.push(`TIMEBASE=1/1000`)
+  meta.push(`START=${start}`)
+  meta.push(`END=${end}`)
+  meta.push(`title=${clip.folder}`)
   lastEnd = end
+}
+
+// push meta into files
+for (const m of meta) { 
+  await $`echo ${m} >> ${metaPath} && sleep 1`
 }
 
 // reimport metadata
