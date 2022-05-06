@@ -54,16 +54,7 @@ for (const clip of orderedFiles) {
 
   console.log("start processing", clip.folder, clip.file)
 
-  // ADD AUDIO OVERLAY
-  // Note we add audio before trim, so if the audio is longer than vid, the trimming is applied on both
-  console.log("1. Audio")
-  if (audioOverlay) {
-    await $`melt ${mp4Path} -audio-track ${path.join(basePath, audioOverlay)} -consumer avformat:${mp4OutputPath} -codec copy`
-    fs.move(mp4OutputPath, mp4Path, { overwrite: true }) // replace the source by the output for next step
-  }
-
-  // TRIM
-  console.log("2. Trim")
+  console.log("1. Trim")
   if (trim) {
     //FIXME: this is not robust at all
     const trimContent = await fs.readFile(path.join(basePath, "trim.md"), "utf8")
@@ -81,6 +72,34 @@ for (const clip of orderedFiles) {
     await $`melt ${mp4Path} in=${startFrame} out=${stopFrame} -consumer avformat:${mp4OutputPath} -codec copy`
     fs.move(mp4OutputPath, mp4Path, { overwrite: true }) // replace the source by the output for next step
   }
+
+  // ADD AUDIO OVERLAY
+  // Note we add audio before trim, so if the audio is longer than vid, the trimming is applied on both
+  console.log("2.1 Audio")
+  if (audioOverlay) {
+    await $`melt ${mp4Path} -audio-track ${path.join(basePath, audioOverlay)} -consumer avformat:${mp4OutputPath} -codec copy`
+    fs.move(mp4OutputPath, mp4Path, { overwrite: true }) // replace the source by the output for next step
+
+    // TRIM
+    // TODO: replace this second trim with a start, end arguments on audio overlay
+    console.log("2.2 Trim again with audio in case it's became too long")
+    if (trim) {
+      //FIXME: this is not robust at all
+      const trimContent = await fs.readFile(path.join(basePath, "trim.md"), "utf8")
+      const trimText = trimContent.split(/\r?\n/)
+      const startTime = trimText
+        .find((line) => line.indexOf("start") > 0)
+        .split("-")[1]
+        .split(":")
+      const stopTime = trimText
+        .find((line) => line.indexOf("end") > 0)
+        .split("-")[1]
+        .split(":")
+      const startFrame = (startTime[0] * 3600 + startTime[1] * 60 + startTime[2]) * 30
+      const stopFrame = (stopTime[0] * 3600 + stopTime[1] * 60 + stopTime[2]) * 30
+      await $`melt ${mp4Path} in=${startFrame} out=${stopFrame} -consumer avformat:${mp4OutputPath} -codec copy`
+      fs.move(mp4OutputPath, mp4Path, { overwrite: true }) // replace the source by the output for next step
+    }
 
   // ADD CAPTION
   console.log("3. Caption")
@@ -105,7 +124,7 @@ await $`xvfb-run -a melt ${assemblyLine} -mix 25 -mixer luma -mixer mix:-1 -cons
 //     await $`xvfb-run -a melt ${assemblyOutputPath} -audio-track -blank 100 underlay.aac -attach-clip volume gain=-12db -transition mix in=0 out=60000 a_track=0 b_track=1`
 //   }
 // } catch(err) { 
-//   //we don't coare
+//   //we don't care
 // }
 
 // finaly add the metadata (chapters, etc.)
