@@ -121,7 +121,11 @@ await $`xvfb-run -a melt ${assemblyLine} -mix 25 -mixer luma -mixer mix:-1 -cons
 //   const underlay = await fs.stat(path.join(dir, 'underlay.aac'))
 //   if(underlay) {
 //     //const duration = await $`ffprobe -i ${assemblyOutputPath} -v quiet -show_entries format=duration -hide_banner -of default=noprint_wrappers=1:nokey=1 | cut -f 1 -d '.'`
+//     //const endframe = parseInt(dur) * 30
+//     //const mp4OutputPath = path.join(dir, 'output-underlay.mp4')
 //     await $`xvfb-run -a melt ${assemblyOutputPath} -audio-track -blank 100 underlay.aac -attach-clip volume gain=-12db -transition mix in=0 out=60000 a_track=0 b_track=1`
+//     // await $`melt ${assembyOutputPath} in=0 out=endframe -consumer avformat:${mp4OutputPath} -codec copy`
+//     // fs.move(mp4OutputPath, assemblyOutputPath, { overwrite: true }) // replace the source by the output for next step
 //   }
 // } catch(err) { 
 //   //we don't care
