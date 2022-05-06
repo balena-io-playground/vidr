@@ -29,7 +29,7 @@ for (const folder of dirContent) {
       folder,
       file: mp4,
       processors,
-      length: parseInt(length.stdout),
+      duration: parseInt(length.stdout),
     })
   } catch (err) {
     /*do nothing, if it's not a dir we don't care*/
@@ -113,9 +113,10 @@ await $`echo "artist=Vidr Team" >> ${metaPath}`
 
 // inject chapters
 let lastEnd = 0
-for (const clip in orderedFiles) {
+for (const clip of orderedFiles) {
   const start = lastEnd
-  const end = start + clip.length
+  const end = start + clip.duration
+  console.log(clip, clip.folder, start, end)
   await $`echo "[CHAPTER]" >> ${metaPath}`
   await $`echo "TIMEBASE=1/1000" >> ${metaPath}`
   await $`echo "START=${start}" >> ${metaPath}`
