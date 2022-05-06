@@ -25,5 +25,6 @@ find . -type f -not -name '.*' -a \( -name "*.MOV" -o -name "*.mov" -name "*.AVI
 find . -type f -not -name '.*' -a \( -name "*.MP3" -o -name "*.mp3" -o -name "*.AAC" -o -name "*.aac" -o -name "*.WAV" -o -name "*.wav" -o -name "*.m4a" -o -name "*.M4A" \) \
        -exec bash -c '\
         file=${1#./}; \
+          rm $file &&
           yes | ffmpeg -i ./$file -af loudnorm -c:v h264 -c:a aac -q:a 1 -ac 2 -ar 48000  ./`echo $file | cut -f 1 -d '.'`.aac \
       ' _ '{}' \;
