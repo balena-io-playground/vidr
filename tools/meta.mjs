@@ -84,7 +84,7 @@ for (const clip of orderedFiles) {
   if (caption) {
     const captionContent = await fs.readFile(path.join(basePath, "caption.md"), "utf8")
     const captionText = captionContent.split(/\r?\n/)[1] // TODO: this is not optimal at all
-    await $`xvfb-run -a melt /usr/src/src/static/lower_thirds/lower_thirds.mov -attach dynamictext:${captionText} bgcolour=0x00000000 fgcolour="#2a506f" geometry="8%/82%:100%x100%:100" family="SourceSansPro-regular" valign="top" size="85" in=25 out=150 -track ${mp4Path} -transition composite fill=1 a_track=1 b_track=0 -consumer avformat:${mp4OutputPath} -codec copy`
+    await $`xvfb-run -a melt /usr/src/assets/lower_thirds/lower_thirds.mov -attach dynamictext:${captionText} bgcolour=0x00000000 fgcolour="#2a506f" geometry="8%/82%:100%x100%:100" family="SourceSansPro-regular" valign="top" size="85" in=25 out=150 -track ${mp4Path} -transition composite fill=1 a_track=1 b_track=0 -consumer avformat:${mp4OutputPath} -codec copy`
     fs.move(mp4OutputPath, mp4Path, { overwrite: true }) // replace the source by the output for next step
   }
 }
