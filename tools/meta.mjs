@@ -92,7 +92,7 @@ for (const clip of orderedFiles) {
 // then assemble
 const assemblyLine = orderedFiles.map((clip) => path.join(dir, clip.folder, clip.file))
 const assemblyOutputPath = path.join(dir, "output-assembly.mp4")
-await $`xvfb-run -a melt ${assemblyLine} -mix 25 -mixer luma -mixer mix:-1 -consumer avformat:${assemblyOutputPath} -codec copy`
+await $`xvfb-run -a melt ${assemblyLine} -mix 25 -mixer luma -mixer mix:-1 -consumer avformat:${assemblyOutputPath} vcodec libx264 acodec=aac`
 
 // finaly add the metadata (chapters, etc.)
 
