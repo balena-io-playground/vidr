@@ -33,3 +33,16 @@ and vidr will do the rest!
 
 https://user-images.githubusercontent.com/39430324/167104079-b9d332b4-c7db-45dd-a6d2-17aa4a829960.mp4
 
+## (Optional) Trim your clip
+So, we're not all trained TV presenters, so our clips might be a bit waffly. Don't worry, vidr's gotchu!
+Just add a `trim.md` file and put the start and end time for the clip, and it'll be trimmed. Magic!
+
+![trim](./docs/images/trim.png)
+
+# What does vidr produce?
+vidr runs as a transformer. It will take in all your videos, audio and markdown files, clean them up (level the audio, make the videos the same resolution and format), trim them, generate and overlay captions, overlay your audio, join them all together into a single clip, make YouTube compatible chapters AND generate a nice video intro and outro using the github repo name and contributors.
+
+Here's the vidr product video explaining it all, generated with vidr itself.
+Dogfooding FTW!
+
+[final video goes here]
