@@ -36,6 +36,8 @@ for (const folder of dirContent) {
   }
 }
 
+console.log('*** files to process:', JSON.stringify(files))
+
 // ensure we have the right order
 const orderedFiles = files
   .sort((a, b) => a.folder < b.folder)
