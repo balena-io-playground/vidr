@@ -26,5 +26,5 @@ find . -type f -not -name '.*' -a \( -name "*.MP3" -o -name "*.mp3" -o -name "*.
        -exec bash -c '\
         file=${1#./}; \
           rm $file &&
-          yes | ffmpeg -i ./$file -af loudnorm -c:v h264 -c:a aac -q:a 1 -ac 2 -ar 48000  ./`echo $file | cut -f 1 -d '.'`.aac \
+          yes | ffmpeg -i ../INPUT/$file -af loudnorm -c:a aac -q:a 1 -ac 2 -ar 48000  ./`echo $file | cut -f 1 -d '.'`.aac \
       ' _ '{}' \;
