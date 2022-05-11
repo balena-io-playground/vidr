@@ -135,8 +135,18 @@ await $`xvfb-run -a melt ${assemblyLine} -mix 25 -mixer luma -mixer mix:-1 -cons
 // finaly add the metadata (chapters, etc.)
 
 // export metadata
+
+const formatPosition = (seconds) => {
+  const h = Math.floor(seconds / 3600)
+  const m = Math.floor((seconds % 3600) / 60)
+  const s = seconds % 60
+  return `${h.toString().length < 2 ? `0${h}` : h}:${m.toString().length < 2 ? `0${m}` : m}:${s.toString().length < 2 ? `0${s}` : s}`
+}
+
 const finalOutputPath = path.join(dir, "output.mp4")
 const metaPath = path.join(dir, "FFMETADATAFILE.txt")
+const chaptersPath = path.join(dir, "chapters.txt")
+
 try {
   await $`ffmpeg -y -i ${assemblyOutputPath} -f ffmetadata ${metaPath}`
 } catch (err) {
@@ -144,10 +154,13 @@ try {
 }
 
 const meta = []
+const chapters = []
 
 // inject title
 meta.push("title=Hello World")
 meta.push("artist=Vidr Team")
+chapters.push("Hello Wolrd")
+chapters.push("by Balena Vidr Team")
 
 // inject chapters
 let lastEnd = 0
@@ -159,12 +172,17 @@ for (const clip of orderedFiles) {
   meta.push(`START=${start * 1000}`)
   meta.push(`END=${end * 1000}`)
   meta.push(`title=${clip.folder}`)
+  chapters.push(`${formatPositions(start)} - ${clip.folder}`)
   lastEnd = end
 }
 
 // push meta into files
 for (const m of meta) { 
   await $`echo ${m} >> ${metaPath} && sleep 1`
+}
+
+for (const c of chapters) { 
+  await $`echo ${c} >> ${chaptersPath} && sleep 1`
 }
 
 // reimport metadata
