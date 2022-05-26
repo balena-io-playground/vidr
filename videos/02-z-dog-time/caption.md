@@ -1,2 +1,0 @@
-# Caption
-Add dynamic captions!

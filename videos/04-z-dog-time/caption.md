@@ -1,2 +1,0 @@
-# Caption
-Cute dog interlude
