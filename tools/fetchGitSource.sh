@@ -1,11 +1,11 @@
 #!/bin/bash -e
-set -o xtrace
 #
 # this script simply clones a repo, and moves all of its video files into /files/SRC
 #
 
-echo "* Cleaning /files/INPUT"
-rm -rf /files/INPUT/*
+echo "* Removing /files/INPUT"
+rm -rf /files/INPUT
+rm -rf /tmp/SOURCE_GIT_REPO
 
 echo "* Cloning source repo: ${SOURCE_GIT_URL}"
 git clone --recursive $SOURCE_GIT_URL /tmp/SOURCE_GIT_REPO
