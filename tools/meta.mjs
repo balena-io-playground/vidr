@@ -172,7 +172,7 @@ for (const clip of orderedFiles) {
   meta.push(`START=${start * 1000}`)
   meta.push(`END=${end * 1000}`)
   meta.push(`title=${clip.folder}`)
-  chapters.push(`${formatPositions(start)} - ${clip.folder}`)
+  chapters.push(`${formatPosition(start)} - ${clip.folder}`)
   lastEnd = end
 }
 
