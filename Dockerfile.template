@@ -40,6 +40,7 @@ RUN install_packages dumb-init \
   libqt5x11extras5 libqt5xml5 libqt5webkit5 \
   libtheora0 libvorbis0a python3 \
   libegl1-mesa libfftw3-3 libvdpau1 \
+  git git-lfs \
   # Additional runtime libs \
   libgavl1 libsox3 libexif12 xvfb libxkbcommon-x11-0 libhyphen0 libwebp6 \
   # LADSPA plugins \
