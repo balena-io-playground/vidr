@@ -62,6 +62,7 @@ WORKDIR /usr/src
 
 COPY . /usr/src/
 
+RUN chmod +x /usr/src/tools/*
 
 ENV LD_LIBRARY_PATH /usr/local/lib
 
