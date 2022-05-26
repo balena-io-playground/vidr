@@ -1,2 +1,0 @@
-ARG BALENA_ARCH=%%BALENA_ARCH%%
-FROM bh.cr/edwin3/files_$BALENA_ARCH

@@ -11,7 +11,7 @@ services:
       - files:/files
 
   files:
-    build: ./files
+    image: bh.cr/edwin3/files_amd64
     restart: always
     ports:
       - 80
