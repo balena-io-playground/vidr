@@ -8,11 +8,14 @@ const dirContent = await fs.readdir(dir)
 // get all mp4 files with their relative path
 const files = []
 
+console.log('* dirContent', dirContent)
+
 for (const folder of dirContent) {
   try {
+    console.log('----')
+    console.log('* Processing Folder:', folder)
     const currentFiles = await fs.readdir(path.join(dir, folder))
     const mp4 = currentFiles.find((file) => file.indexOf(".mp4") > 0)
-
     const processors = {
       caption: currentFiles.includes("caption.md"),
       audioOverlay: currentFiles.find((file) => file.indexOf(".aac") > 0) ?? false,
@@ -32,6 +35,7 @@ for (const folder of dirContent) {
       duration: parseInt(length.stdout),
     })
   } catch (err) {
+    console.log(`* error in ${folder}`, err)
     /*do nothing, if it's not a dir we don't care*/
   }
 }
