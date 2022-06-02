@@ -41,6 +41,7 @@ RUN install_packages dumb-init \
   libtheora0 libvorbis0a python3 \
   libegl1-mesa libfftw3-3 libvdpau1 \
   git git-lfs \
+  rename \
   # Additional runtime libs \
   libgavl1 libsox3 libexif12 xvfb libxkbcommon-x11-0 libhyphen0 libwebp6 \
   # LADSPA plugins \
