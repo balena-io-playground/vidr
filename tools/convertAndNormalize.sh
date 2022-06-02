@@ -14,10 +14,10 @@ cd ../OUTPUT
 # TODO: Need to do some conversion for vertical video
 # Then -> turn into : mp4 / h264 / 1080p30 / aac / loudness normalized
 
-find . -type f -not -name '.*' -a \( -name "*.MOV" -o -name "*.mov" -name "*.AVI" -o -name "*.avi" -o -name "*.mp4" -o -name "*.MP4" \) \
+find . -type f -not -name '.*' -a \( -name "*.MOV" -o -name "*.mov" -name "*.mkv" -o -name "*.MKV" -name "*.wmv" -o -name "*.WMV" -name "*.webm" -o -name "*.WEBM" -name "*.AVI" -o -name "*.avi" -o -name "*.m4v" -o -name "*.M4V" -o -name "*.mp4" -o -name "*.MP4" \) \
        -exec bash -c '\
         file=${1#./}; \
-          rm $file &&
+          rm $file && echo "* Processing File: ${file}" && 
           yes | ffmpeg -i ../INPUT/$file -vf "yadif,format=yuv420p,fps=30,scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:-1:-1:color=black" -af loudnorm -c:v libx264 -crf 18 -bf 2 -c:a aac -q:a 1 -ac 2 -ar 48000 -use_editlist 0 -movflags +faststart ./`echo $file | cut -f 1 -d '.'`.mp4 \
       ' _ '{}' \;
 
