@@ -39,6 +39,12 @@ Just add a `trim.md` file and put the start and end time for the clip, and it'll
 
 ![trim](./docs/images/trim.png)
 
+# Technical usage
+
+You will need to specify at least one environment variable, which is `SOURCE_GIT_URL`. This should be a publicly accessible git repository that has a `videos` directory, which houses all your content.
+
+You can also specify `SOURCE_GIT_BRANCH` if you want vidr to use a specific branch on your repository as well.
+
 # What does vidr produce?
 vidr runs as a transformer. It will take in all your videos, audio and markdown files, clean them up (level the audio, make the videos the same resolution and format), trim them, generate and overlay captions, overlay your audio, join them all together into a single clip, make YouTube compatible chapters AND generate a nice video intro and outro using the github repo name and contributors.
 
